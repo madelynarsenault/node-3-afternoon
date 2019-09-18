@@ -14,8 +14,8 @@ module.exports ={
         const dbInstance = req.app.get('db')
         const {id} = req.params;
 
-        dbInstance.read_product()
-        .then( () => res.sendStatus(200) )
+        dbInstance.read_product(id)
+        .then(product => res.sendStatus(200).send(product))
         .catch( err => {
             res.status(500).send({errorMessage: "oops theres something wrong here yall"});
             console.log(err)
@@ -35,7 +35,7 @@ module.exports ={
         const dbInstance = req.app.get('db')
         const {params, query} = req;
 
-        dbInstance.update_product()
+        dbInstance.update_product([params.id, query.desc])
         .then( () => res.sendStatus(200) )
         .catch( err => {
             res.status(500).send({errorMessage: "oops theres something wrong here yall"});
@@ -46,7 +46,7 @@ module.exports ={
         const dbInstance = req.app.get('db')
         const { id } = req.params;
 
-        dbInstance.delete_product()
+        dbInstance.delete_product(id)
         .then( () => res.sendStatus(200) )
         .catch( err => {
             res.status(500).send({errorMessage: "oops theres something wrong here yall"});
